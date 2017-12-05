@@ -1,5 +1,5 @@
-#' @name dcda
-#' @title Domain Content Dissimilarity Analysis
+#' @name domAbundance
+#' @title Domain Abundance for each sample
 #' @description Compute Pfam-A domain content dissimilarity between two or more
 #' proteomes. 
 #' @param fastas A \code{character} vector giving the file names of the amino 
@@ -16,10 +16,10 @@
 #' the second is the \code{dist} matrix.
 #' @importFrom vegan vegdist
 #' @export
-dcda <- function(fastas, 
+domAbundance <- function(fastas, 
                  pfamA, 
                  cut = 'ga', 
-                 distMethod = 'bray', 
+                 # distMethod = 'bray', 
                  cpus = 1L){
   
   #Eval - err
@@ -88,14 +88,16 @@ dcda <- function(fastas,
   colnames(mat) <- ids
   mat <- mat[, -which(colSums(mat)==0)]
   
-  #Compute dist
-  cat('Computing distance/dissimilarity.. ')
-  d <- vegan::vegdist(mat, method = distMethod)
-  cat('DONE!\n')
+  return(mat)
   
-  out <- list(mat, d)
-  
-  #Return
-  return(out)
+  # #Compute dist
+  # cat('Computing distance/dissimilarity.. ')
+  # d <- vegan::vegdist(mat, method = distMethod)
+  # cat('DONE!\n')
+  # 
+  # out <- list(mat, d)
+  # 
+  # #Return
+  # return(out)
 }
 
