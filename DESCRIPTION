@@ -10,4 +10,4 @@ Suggests: rmarkdown,knitr
 VignetteBuilder: knitr
 Description: Test package from MISP camp in Copenhagen, DE
 License: GPL-3
-
+RoxygenNote: 6.0.1
