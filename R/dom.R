@@ -35,22 +35,14 @@ domAbundance <- function(fastas,
     stop('Pfam-A.hmm file path is not provided.')
   }
   
-  # if (Sys.which("hmmsearch")==""){
-  #   stop("\n\tHMMER (v.3) is not installed. (Couldn't find 'hmmsearch' in $PATH)
-  #        \nPlease install it before re-running dcda().\n\n")
-  # }
-  
-  #find binaries
-  hmmstat <- system.file('hmmer3.1b2_binaries/hmmstat',
-                         package = 'DCDA')
-  hmmpress <- system.file('hmmer3.1b2_binaries/hmmpress',
-                          package = 'DCDA')
-  hmmsearch <- system.file('hmmer3.1b2_binaries/hmmsearch',
-                           package = 'DCDA')
+  if (Sys.which("hmmsearch")==""){
+    stop("\n\tHMMER (v.3) is not installed. (Couldn't find 'hmmsearch' in $PATH)
+         \nPlease install it before re-running dcda().\n\n")
+  }
   
   #Get pfam-A ids
   cat('Retrieving information from Pfam-A.hmm.. ')
-  stats <- hmmStat(bin = hmmstat, hmmfile = pfamA)
+  stats <- hmmStat(hmmfile = pfamA)
   ids <- getIdsFromStats(stats = stats)
   file.remove(stats)
   cat('DONE!\n')
@@ -59,7 +51,7 @@ domAbundance <- function(fastas,
   idx <- paste0(pfamA, c('.h3f', '.h3i', '.h3m', '.h3p'))
   if (any(!file.exists(idx))){
     cat('Pfam-A.hmm is not indexed. Pressing Pfam-A.hmm.. ')
-    hmmPress(bin = hmmpress, model = pfamA)
+    hmmPress(model = pfamA)
     cat('DONE!\n')
   }
   
@@ -68,8 +60,7 @@ domAbundance <- function(fastas,
   mat <- parallel::mclapply(fastas, function(x){
     
     # tmp <- tempfile()
-    hmmres <- hmmSearch(bin = hmmsearch, 
-                        fasta = x, 
+    hmmres <- hmmSearch(fasta = x, 
                         hmm = pfamA, 
                         cut = cut, 
                         oty = 'domtblout', 
@@ -89,15 +80,5 @@ domAbundance <- function(fastas,
   mat <- mat[, -which(colSums(mat)==0)]
   
   return(mat)
-  
-  # #Compute dist
-  # cat('Computing distance/dissimilarity.. ')
-  # d <- vegan::vegdist(mat, method = distMethod)
-  # cat('DONE!\n')
-  # 
-  # out <- list(mat, d)
-  # 
-  # #Return
-  # return(out)
 }
 

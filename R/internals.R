@@ -1,12 +1,11 @@
 #' @name hmmStat 
 #' @title Compute Hmm Stats
 #' @description Compute hmm stats.
-#' @param bin The location of \code{hmmstat} binary.
 #' @param hmmfile \code{character} The path to the hmm file.
 #' @return The file name of the temporary file where stats were written.
-hmmStat <- function(bin, hmmfile){
+hmmStat <- function(hmmfile){
   tmp <- tempfile()
-  hmmstat <- paste0(bin, ' ', hmmfile, ' > ', tmp)
+  hmmstat <- paste0('hmmstat ', hmmfile, ' > ', tmp)
   system(hmmstat)
   return(tmp)
 }
@@ -29,11 +28,10 @@ getIdsFromStats <- function(stats){
 #' @name hmmPress
 #' @title hmmPress
 #' @description Wrapper function of \code{hmmpress} (HMMER 3).
-#' @param bin The location of \code{hmmpress} binary.
 #' @param model \code{character} The name of the hmm file.
 #' @return The names of indexed files.
-hmmPress <- function(bin, model){
-  hmmpress <- paste(bin, '-f', model)
+hmmPress <- function(model){
+  hmmpress <- paste('hmmpress -f', model)
   system(hmmpress, ignore.stdout = TRUE)
   o <- paste0(model, c('','.h3f', '.h3i', '.h3m', '.h3p'))
   o
@@ -43,15 +41,13 @@ hmmPress <- function(bin, model){
 #' @title Run hmmsearch (HMMER 3)
 #' @description Takes a fasta file and a Hidden Markov Model profile and
 #' performs a search of the former over the latter.
-#' @param bin The location of \code{hmmsearch} binary.
 #' @param fasta A protein fasta file.
 #' @param hmm A hmm file. Must be pressed (see hmmpress from HMMER manual).
 #' @param oty The \code{hmmsearch} output type.
 #' @param cut One of "ga" or "tc". See HMMER 3.1b2 manual.
 #' @param n_threads An \code{integer}. The number of cores to use.
 #' @return The path to a temporary file where the hmmsearch output is placed.
-hmmSearch <- function(bin,
-                      fasta,
+hmmSearch <- function(fasta,
                       hmm,
                       oty = 'domtblout',
                       cut = 'ga',
@@ -62,7 +58,7 @@ hmmSearch <- function(bin,
   
   #run hmmsearch
   blout <- tempfile(pattern = 'tmpo', fileext = '.tab')
-  hmmse <- paste0(bin,' -o /dev/null --noali',
+  hmmse <- paste0('hmmsearch -o /dev/null --noali',
                   paste0(' --', oty, ' '),
                   blout,
                   paste0(' --cut_', cut),
