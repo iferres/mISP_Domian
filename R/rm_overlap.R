@@ -14,7 +14,7 @@ overlap <- function(a=c(1L, 1L), b=c(1L, 1L)){
 #' m =
 #'   A  B  C
 #'A  T  T  F
-#'B  T  T  T
+#'B  T  T  F
 #'C  F  F  T
 
 determineOverlap<-function(m){
