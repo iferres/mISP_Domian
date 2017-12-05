@@ -1,16 +1,23 @@
-runCdhit <- function(file){
+runCdhit <- function(file, out){
   
   if (Sys.which('cd-hit')==''){
     stop("cd-hit is not in your $PATH.")
   }
   
-  ofile <- sub('[.]\\w+','.cdhit', file)
+  if (missing(out)){
+    
+    out <- rev(strsplit(file, '/')[[1]])[1]
+    
+    out <- sub('[.]\\w+','.cdhit', out)
+    
+  }
   
-  cdhit <- paste0('cd-hit -c 0.97 -i ', file, ' -o ', ofile)
+  
+  cdhit <- paste0('cd-hit -c 0.97 -i ', file, ' -o ', out)
   
   system(cdhit)
   
-  return(ofile)  
+  return(out)  
 }
 
 
