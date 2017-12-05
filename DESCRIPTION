@@ -1,0 +1,13 @@
+Package: misp
+Type: Package
+Title: MISP test package
+Version: 0.0.1
+Date: 2017-12-05
+Authors@R: person("Ignacio", "Ferrés", email = "iferres@pasteur.edu.uy",
+  role = c("aut", "cre"))
+Imports: devtools
+Suggests: rmarkdown,knitr
+VignetteBuilder: knitr
+Description: Test package from MISP camp in Copenhagen, DE
+License: GPL-3
+RoxygenNote: 6.0.1
