@@ -17,7 +17,7 @@ dom_tfidf <- function(df){
     
     tf[, x] * idf[x]
     
-  }, FUN.VALUE = rep(1, nrow(df)))
+  }, FUN.VALUE = rep(NA_real_, nrow(df)))
   
   colnames(o) <- colnames(df)
   
