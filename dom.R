@@ -14,7 +14,7 @@
 #' @param cpus \code{integer} The number of cpus to use.
 #' @return A \code{list} object. The first element is the abundance matrix and
 #' the second is the \code{dist} matrix.
-#' @importFrom vegan vegdist
+# #' @importFrom vegan vegdist
 #' @export
 domAbundance <- function(fastas, 
                  pfamA, 
