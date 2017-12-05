@@ -13,7 +13,7 @@ runCdhit <- function(file, out){
   }
   
   
-  cdhit <- paste0('cd-hit -c 0.97 -i ', file, ' -o ', out)
+  cdhit <- paste0('cd-hit -c 0.97 -A 0.9 -i ', file, ' -o ', out)
   
   system(cdhit)
   
